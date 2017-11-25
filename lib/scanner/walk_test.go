@@ -9,7 +9,6 @@ package scanner
 import (
 	"bytes"
 	"context"
-	"crypto/rand"
 	"fmt"
 	"io"
 	"os"
@@ -24,8 +23,22 @@ import (
 	"github.com/syncthing/syncthing/lib/fs"
 	"github.com/syncthing/syncthing/lib/ignore"
 	"github.com/syncthing/syncthing/lib/protocol"
+	"github.com/syncthing/syncthing/lib/rand"
 	"golang.org/x/text/unicode/norm"
 )
+
+var symlinkSupported = true
+
+func init() {
+	if runtime.GOOS == "windows" {
+		name := fmt.Sprintf("~windows-symlink-test-%d", rand.Int63())
+		if err := os.Symlink("foo", name); err != nil {
+			fmt.Println("Symlinks not supported:", err)
+			symlinkSupported = false
+		}
+		os.Remove(name)
+	}
+}
 
 type testfile struct {
 	name   string
@@ -327,7 +340,7 @@ func TestWalkSymlinkUnix(t *testing.T) {
 }
 
 func TestWalkSymlinkWindows(t *testing.T) {
-	if runtime.GOOS != "windows" {
+	if !symlinkSupported {
 		t.Skip("skipping unsupported symlink test")
 	}
 
