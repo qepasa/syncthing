@@ -19,6 +19,8 @@ import (
 	"sync"
 	"testing"
 
+	"github.com/syncthing/syncthing/lib/osutil"
+
 	"github.com/d4l3k/messagediff"
 	"github.com/syncthing/syncthing/lib/fs"
 	"github.com/syncthing/syncthing/lib/ignore"
@@ -32,7 +34,7 @@ var symlinkSupported = true
 func init() {
 	if runtime.GOOS == "windows" {
 		name := fmt.Sprintf("~windows-symlink-test-%d", rand.Int63())
-		if err := os.Symlink("foo", name); err != nil {
+		if err := osutil.DebugSymlinkForTestsOnly("foo", name); err != nil {
 			fmt.Println("Symlinks not supported:", err)
 			symlinkSupported = false
 		}
@@ -350,7 +352,7 @@ func TestWalkSymlinkWindows(t *testing.T) {
 	defer os.RemoveAll("_symlinks")
 
 	os.Mkdir("_symlinks", 0755)
-	if err := os.Symlink("destination", "_symlinks/link"); err != nil {
+	if err := osutil.DebugSymlinkForTestsOnly("destination", "_symlinks/link"); err != nil {
 		// Probably we require permissions we don't have.
 		t.Skip(err)
 	}

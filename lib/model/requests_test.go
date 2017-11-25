@@ -8,7 +8,6 @@ package model
 
 import (
 	"bytes"
-	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -21,21 +20,7 @@ import (
 	"github.com/syncthing/syncthing/lib/db"
 	"github.com/syncthing/syncthing/lib/fs"
 	"github.com/syncthing/syncthing/lib/protocol"
-	"github.com/syncthing/syncthing/lib/rand"
 )
-
-var symlinkSupported = true
-
-func init() {
-	if runtime.GOOS == "windows" {
-		name := fmt.Sprintf("~windows-symlink-test-%d", rand.Int63())
-		if err := os.Symlink("foo", name); err != nil {
-			fmt.Println("Symlinks not supported:", err)
-			symlinkSupported = false
-		}
-		os.Remove(name)
-	}
-}
 
 func TestRequestSimple(t *testing.T) {
 	// Verify that the model performs a request and creates a file based on
@@ -79,8 +64,8 @@ func TestRequestSimple(t *testing.T) {
 func TestSymlinkTraversalRead(t *testing.T) {
 	// Verify that a symlink can not be traversed for reading.
 
-	if !symlinkSupported {
-		t.Skip("no symlink support")
+	if runtime.GOOS == "windows" {
+		t.Skip("no symlink support on CI")
 		return
 	}
 
@@ -119,8 +104,8 @@ func TestSymlinkTraversalRead(t *testing.T) {
 func TestSymlinkTraversalWrite(t *testing.T) {
 	// Verify that a symlink can not be traversed for writing.
 
-	if !symlinkSupported {
-		t.Skip("no symlink support")
+	if runtime.GOOS == "windows" {
+		t.Skip("no symlink support on CI")
 		return
 	}
 
@@ -219,8 +204,8 @@ func TestRequestCreateTmpSymlink(t *testing.T) {
 }
 
 func TestRequestVersioningSymlinkAttack(t *testing.T) {
-	if !symlinkSupported {
-		t.Skip("no symlink support")
+	if runtime.GOOS == "windows" {
+		t.Skip("no symlink support on Windows")
 	}
 
 	// Sets up a folder with trashcan versioning and tries to use a
