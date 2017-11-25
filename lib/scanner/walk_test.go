@@ -19,11 +19,10 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/syncthing/syncthing/lib/osutil"
-
 	"github.com/d4l3k/messagediff"
 	"github.com/syncthing/syncthing/lib/fs"
 	"github.com/syncthing/syncthing/lib/ignore"
+	"github.com/syncthing/syncthing/lib/osutil"
 	"github.com/syncthing/syncthing/lib/protocol"
 	"github.com/syncthing/syncthing/lib/rand"
 	"golang.org/x/text/unicode/norm"
