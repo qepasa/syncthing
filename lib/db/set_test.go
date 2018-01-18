@@ -169,7 +169,7 @@ func TestGlobalSet(t *testing.T) {
 		t.Errorf("Global incorrect;\n A: %v !=\n E: %v", g, expectedGlobal)
 	}
 
-	globalFiles, globalDirectories, globalDeleted, globalBytes := 0, 0, 0, int64(0)
+	globalFiles, globalDirectories, globalDeleted, globalBytes := int32(0), int32(0), int32(0), int64(0)
 	for _, f := range g {
 		if f.IsInvalid() {
 			continue
@@ -205,7 +205,7 @@ func TestGlobalSet(t *testing.T) {
 		t.Errorf("Have incorrect;\n A: %v !=\n E: %v", h, localTot)
 	}
 
-	haveFiles, haveDirectories, haveDeleted, haveBytes := 0, 0, 0, int64(0)
+	haveFiles, haveDirectories, haveDeleted, haveBytes := int32(0), int32(0), int32(0), int64(0)
 	for _, f := range h {
 		if f.IsInvalid() {
 			continue
@@ -447,10 +447,10 @@ func TestGlobalReset(t *testing.T) {
 	m := db.NewFileSet("test)", fs.NewFilesystem(fs.FilesystemTypeBasic, "."), ldb)
 
 	local := []protocol.FileInfo{
-		{Name: "a", Version: protocol.Vector{Counters: []protocol.Counter{{ID: myID, Value: 1000}}}},
-		{Name: "b", Version: protocol.Vector{Counters: []protocol.Counter{{ID: myID, Value: 1000}}}},
-		{Name: "c", Version: protocol.Vector{Counters: []protocol.Counter{{ID: myID, Value: 1000}}}},
-		{Name: "d", Version: protocol.Vector{Counters: []protocol.Counter{{ID: myID, Value: 1000}}}},
+		{Name: "a", Sequence: 1, Version: protocol.Vector{Counters: []protocol.Counter{{ID: myID, Value: 1000}}}},
+		{Name: "b", Sequence: 2, Version: protocol.Vector{Counters: []protocol.Counter{{ID: myID, Value: 1000}}}},
+		{Name: "c", Sequence: 3, Version: protocol.Vector{Counters: []protocol.Counter{{ID: myID, Value: 1000}}}},
+		{Name: "d", Sequence: 4, Version: protocol.Vector{Counters: []protocol.Counter{{ID: myID, Value: 1000}}}},
 	}
 
 	remote := []protocol.FileInfo{
@@ -464,8 +464,8 @@ func TestGlobalReset(t *testing.T) {
 	g := globalList(m)
 	sort.Sort(fileList(g))
 
-	if fmt.Sprint(g) != fmt.Sprint(local) {
-		t.Errorf("Global incorrect;\n%v !=\n%v", g, local)
+	if diff, equal := messagediff.PrettyDiff(local, g); !equal {
+		t.Errorf("Global incorrect;\nglobal: %v\n!=\nlocal: %v\ndiff:\n%s", g, local, diff)
 	}
 
 	replace(m, remoteDevice0, remote)
@@ -474,8 +474,8 @@ func TestGlobalReset(t *testing.T) {
 	g = globalList(m)
 	sort.Sort(fileList(g))
 
-	if fmt.Sprint(g) != fmt.Sprint(local) {
-		t.Errorf("Global incorrect;\n%v !=\n%v", g, local)
+	if diff, equal := messagediff.PrettyDiff(local, g); !equal {
+		t.Errorf("Global incorrect;\nglobal: %v\n!=\nlocal: %v\ndiff:\n%s", g, local, diff)
 	}
 }
 
