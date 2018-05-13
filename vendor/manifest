@@ -83,14 +83,6 @@
 			"notests": true
 		},
 		{
-			"importpath": "github.com/ccding/go-stun",
-			"repository": "https://github.com/ccding/go-stun",
-			"vcs": "git",
-			"revision": "d9bbe8f8fa7bf7ed03e6cfc6a2796bb36139e1f4",
-			"branch": "master",
-			"notests": true
-		},
-		{
 			"importpath": "github.com/cheggaaa/pb",
 			"repository": "https://github.com/cheggaaa/pb",
 			"vcs": "git",
@@ -102,7 +94,7 @@
 			"importpath": "github.com/chmduquesne/rollinghash",
 			"repository": "https://github.com/chmduquesne/rollinghash",
 			"vcs": "git",
-			"revision": "3dc7875a1f890f9bcf0619adb5571fc6f7d516bb",
+			"revision": "abb8cbaf9915e48ee20cae94bcd94221b61707a2",
 			"branch": "master",
 			"notests": true
 		},
@@ -203,14 +195,6 @@
 			"repository": "https://github.com/jackpal/gateway",
 			"vcs": "git",
 			"revision": "5795ac81146e01d3fab7bcf21c043c3d6a32b006",
-			"branch": "master",
-			"notests": true
-		},
-		{
-			"importpath": "github.com/kardianos/osext",
-			"repository": "https://github.com/kardianos/osext",
-			"vcs": "git",
-			"revision": "ae77be60afb1dcacde03767a8c37337fad28ac14",
 			"branch": "master",
 			"notests": true
 		},
@@ -456,6 +440,14 @@
 			"notests": true
 		},
 		{
+			"importpath": "github.com/syncthing/notify",
+			"repository": "https://github.com/syncthing/notify",
+			"vcs": "git",
+			"revision": "b9ceffc925039c77cd9e0d38f248279ccc4399e2",
+			"branch": "master",
+			"notests": true
+		},
+		{
 			"importpath": "github.com/syndtr/goleveldb/leveldb",
 			"repository": "https://github.com/syndtr/goleveldb",
 			"vcs": "git",
@@ -522,30 +514,6 @@
 			"revision": "bf64b92db6b05651d6c25a3dabf2d543b360c0aa",
 			"branch": "master",
 			"path": "/qr",
-			"notests": true
-		},
-		{
-			"importpath": "github.com/xtaci/kcp-go",
-			"repository": "https://github.com/xtaci/kcp-go",
-			"vcs": "git",
-			"revision": "86eebd5cadb519b7c9306082c7eb3bcee2c49a7b",
-			"branch": "master",
-			"notests": true
-		},
-		{
-			"importpath": "github.com/xtaci/smux",
-			"repository": "https://github.com/xtaci/smux",
-			"vcs": "git",
-			"revision": "c3e18246ff2252a6e9d6b529fcbf22ae5c74c007",
-			"branch": "master",
-			"notests": true
-		},
-		{
-			"importpath": "github.com/zillode/notify",
-			"repository": "https://github.com/zillode/notify",
-			"vcs": "git",
-			"revision": "8fff849a2026ce7a59f67ed9747dd9c7adc8bd0b",
-			"branch": "master",
 			"notests": true
 		},
 		{
@@ -636,15 +604,6 @@
 			"revision": "d866cfc389cec985d6fda2859936a575a55a3ab6",
 			"branch": "master",
 			"path": "bpf",
-			"notests": true
-		},
-		{
-			"importpath": "golang.org/x/net/context",
-			"repository": "https://go.googlesource.com/net",
-			"vcs": "git",
-			"revision": "d866cfc389cec985d6fda2859936a575a55a3ab6",
-			"branch": "master",
-			"path": "/context",
 			"notests": true
 		},
 		{
