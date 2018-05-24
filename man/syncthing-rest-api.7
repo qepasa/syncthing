@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "SYNCTHING-REST-API" "7" "May 05, 2018" "v0.14" "Syncthing"
+.TH "SYNCTHING-REST-API" "7" "May 17, 2018" "v0.14" "Syncthing"
 .SH NAME
 syncthing-rest-api \- REST API
 .
@@ -37,7 +37,7 @@ Syncthing. In most cases both the input and output data is in JSON format. The
 interface is subject to change.
 .SH API KEY
 .sp
-To use the REST AP an API key must be set and used. The API key can be
+To use the REST API an API key must be set and used. The API key can be
 generated in the GUI, or set in the \fBconfiguration/gui/apikey\fP element in
 the configuration file. To use an API key, set the request header
 \fBX\-API\-Key\fP to the API key value. For example, \fBcurl \-X POST \-H
@@ -564,9 +564,10 @@ newest version and upgrade possibility.
 .nf
 .ft C
 {
-  "latest": "v0.10.27",
-  "newer": false,
-  "running": "v0.10.27+5\-g36c93b7"
+  "latest": "v0.14.47",
+  "majorNewer": false,
+  "newer": true,
+  "running": "v0.14.46"
 }
 .ft P
 .fi

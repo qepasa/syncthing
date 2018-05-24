@@ -1506,13 +1506,13 @@ angular.module('syncthing.core')
             $scope.currentFolder.path = pathJoin($scope.config.options.defaultFolderPath, newvalue);
         });
 
-        $scope.$watch('currentFolder.fsWatcherEnabled', function (newvalue) {
-            if (newvalue) {
+        $scope.fsWatcherToggled = function () {
+            if ($scope.currentFolder.fsWatcherEnabled) {
                 $scope.currentFolder.rescanIntervalS = 3600;
             } else {
                 $scope.currentFolder.rescanIntervalS = 60;
             }
-        });
+        };
 
         $scope.loadFormIntoScope = function (form) {
             console.log('loadFormIntoScope',form.$name);
@@ -1760,6 +1760,9 @@ angular.module('syncthing.core')
         };
 
         $scope.folderLabel = function (folderID) {
+            if (!$scope.folders[folderID]) {
+                return folderID;
+            }
             var label = $scope.folders[folderID].label;
             return label.length > 0 ? label : folderID;
         }
