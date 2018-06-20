@@ -78,6 +78,7 @@ angular.module('syncthing.core')
             FOLDER_SCAN_PROGRESS: 'FolderScanProgress',   // Emitted every ScanProgressIntervalS seconds, indicating how far into the scan it is at.
             FOLDER_PAUSED:        'FolderPaused',   // Emitted when a folder is paused
             FOLDER_RESUMED:       'FolderResumed',   // Emitted when a folder is resumed
+            LISTEN_ADDRESSES_CHANGED: 'ListenAddressesChanged', // Emitted when listen addresses change
 
             start: function() {
                 $http.get(urlbase + '/events?limit=1')

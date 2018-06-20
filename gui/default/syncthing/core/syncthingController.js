@@ -240,6 +240,10 @@ angular.module('syncthing.core')
             }
         });
 
+        $scope.$on(Events.LISTEN_ADDRESSES_CHANGED, function (event, arg) {
+            console.log('ADRESSES CHANGED' + event + arg);
+        });
+
         $scope.$on('ConfigLoaded', function () {
             if ($scope.config.options.urAccepted === 0) {
                 // If usage reporting has been neither accepted nor declined,
@@ -373,8 +377,15 @@ angular.module('syncthing.core')
         function updateLocalConfig(config) {
             var hasConfig = !isEmptyObject($scope.config);
 
+
             $scope.config = config;
             $scope.config.options._listenAddressesStr = $scope.config.options.listenAddresses.join(', ');
+
+
+            $scope.config.options._tcpAddressesStr = $scope.config.options.listenAddresses.filter(function(key){ return key.startsWith('"tcp'); }).join(', ');
+            $scope.config.options._relayAddressesStr =  $scope.config.options.listenAddresses.filter(function(key){ return key.startsWith('"dynamic') || key.startsWith('"relay'); }).join(', ');
+
+
             $scope.config.options._globalAnnounceServersStr = $scope.config.options.globalAnnounceServers.join(', ');
             $scope.config.options._urAcceptedStr = "" + $scope.config.options.urAccepted;
 
@@ -1242,6 +1253,9 @@ angular.module('syncthing.core')
                 $scope.config.options = angular.copy($scope.tmpOptions);
                 $scope.config.gui = angular.copy($scope.tmpGUI);
 
+
+                $scope.config.options._listenAddressesStr = [$scope.config.options._tcpAddressesStr,  $scope.config.options._relayAddressesStr].join();
+                console.log($scope.config.options._listenAddressesStr);
                 ['listenAddresses', 'globalAnnounceServers'].forEach(function (key) {
                     $scope.config.options[key] = $scope.config.options["_" + key + "Str"].split(/[ ,]+/).map(function (x) {
                         return x.trim();
