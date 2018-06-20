@@ -17,3 +17,4 @@ RELEASE
 deb
 lib/auto/gui.files.go
 snapcraft.yaml
+.idea/
