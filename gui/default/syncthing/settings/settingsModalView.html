@@ -192,7 +192,7 @@
                     <label for="RelayAddress" ><span translate>Listen Address:</span></label>&emsp;<a href="https://docs.syncthing.net/users/config.html#listen-addresses" target="_blank"><span class="fas fa-question-circle"></span>&nbsp;<span translate>Help</span></a>
                   </div>
                   <div class="col-sm-8">
-                    <input id="RelayAddress" class="form-control" type="text" ng-model="tmpOptions._relayAddressesStr"/>
+                    <input ng-disabled="!tmpOptions.relaysEnabled" id="RelayAddress" class="form-control" type="text" ng-model="tmpOptions._relayAddressesStr"/>
                   </div>
                 </div>
               </div>

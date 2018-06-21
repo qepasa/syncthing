@@ -377,14 +377,18 @@ angular.module('syncthing.core')
         function updateLocalConfig(config) {
             var hasConfig = !isEmptyObject($scope.config);
 
-
+            var defaultTcpAddress = 'tcp://0.0.0.0:22000';
+            var defaultRelayAddress = 'dynamic+https://relays.syncthing.net/endpoint';
             $scope.config = config;
             $scope.config.options._listenAddressesStr = $scope.config.options.listenAddresses.join(', ');
 
-
-            $scope.config.options._tcpAddressesStr = $scope.config.options.listenAddresses.filter(function(key){ return key.startsWith('"tcp'); }).join(', ');
-            $scope.config.options._relayAddressesStr =  $scope.config.options.listenAddresses.filter(function(key){ return key.startsWith('"dynamic') || key.startsWith('"relay'); }).join(', ');
-
+            if($scope.config.options._listenAddressesStr.localeCompare('default') === 0){
+                $scope.config.options._tcpAddressesStr = defaultTcpAddress;
+                $scope.config.options._relayAddressesStr = defaultRelayAddress;
+            } else {
+                $scope.config.options._tcpAddressesStr = $scope.config.options.listenAddresses.filter(function(key){ return key.startsWith('tcp'); }).join(', ');
+                $scope.config.options._relayAddressesStr =  $scope.config.options.listenAddresses.filter(function(key){ return key.startsWith('dynamic') || key.startsWith('relay'); }).join(', ');
+            }
 
             $scope.config.options._globalAnnounceServersStr = $scope.config.options.globalAnnounceServers.join(', ');
             $scope.config.options._urAcceptedStr = "" + $scope.config.options.urAccepted;
@@ -1253,11 +1257,17 @@ angular.module('syncthing.core')
                 $scope.config.options = angular.copy($scope.tmpOptions);
                 $scope.config.gui = angular.copy($scope.tmpGUI);
 
+                var defaultTcpAddress = 'tcp://0.0.0.0:22000';
+                var defaultRelayAddress = 'dynamic+https://relays.syncthing.net/endpoint';
+                if($scope.config.options._tcpAddressesStr.localeCompare(defaultTcpAddress) === 0 && $scope.config.options._relayAddressesStr.localeCompare(defaultRelayAddress) === 0){
+                    $scope.config.options._listenAddressesStr = 'default';
+                } else {
+                    $scope.config.options._listenAddressesStr = [$scope.config.options._tcpAddressesStr,  $scope.config.options._relayAddressesStr].join();
+                }
 
-                $scope.config.options._listenAddressesStr = [$scope.config.options._tcpAddressesStr,  $scope.config.options._relayAddressesStr].join();
-                console.log($scope.config.options._listenAddressesStr);
                 ['listenAddresses', 'globalAnnounceServers'].forEach(function (key) {
                     $scope.config.options[key] = $scope.config.options["_" + key + "Str"].split(/[ ,]+/).map(function (x) {
+
                         return x.trim();
                     });
                 });
